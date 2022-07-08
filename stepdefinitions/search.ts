@@ -32,12 +32,13 @@ Then(/^I entered pin "(.*?)"$/,{timeout: 3 * 5000}, async(pin:string) => {
     await search.searchPin.sendKeys(pin);
     await browser.sleep(2000);
 
-    // search.zipapply.getLocation().then(function (location) {
-    //   return browser.executeScript(
-    //     "window.scrollTo(" + location.x + ", " + location.y + ");"
-    //   );
-    // });
-    await browser.sleep(3000);
+        await browser.sleep(3000);
+    // browser.executeScript("window.scrollTo(" + location.x + ", " + location.y + ");").then(async()=>{
+    //   //whatever you need to check for here
+    //   await search.zipapply.click();
+
+    //   });
+    await browser.executeScript(`arguments[0].scrollIntoView();`, search.zipapply.getWebElement());
 
     await search.zipapply.click();
     await present(search.updatedpin)
@@ -61,22 +62,16 @@ Then(/^I entered pin "(.*?)"$/,{timeout: 3 * 5000}, async(pin:string) => {
 });
 When('I click on signIn to enter email {string} and password {string}',{timeout: 2 * 5000}, async (email:string,pwd:string) => {
     // When(/^I click on signIn to enter email "(.*?)" and password "(.*?)"$/, async (email:string,pwd:string) => {
-        // search.hellosignin.getLocation().then(function (location) {
-        //   return browser.executeScript(
-        //     "window.scrollTo(" + location.x + ", " + location.y + ");"
-        //   );
-        // });
+        
+  await browser.executeScript(`arguments[0].scrollIntoView();`, search.hellosignin.getWebElement());
     
-    await search.hellosignin.click();
-    // await waitVisibility(search.inputemail)
+        await search.hellosignin.click();
     await present(search.inputemail)
     await search.inputemail.sendKeys(email);
     // //   browser.sleep(3000)
-    // search.clickcontinue.getLocation().then(function (location) {
-    //     return browser.executeScript(
-    //       "window.scrollTo(" + location.x + ", " + location.y + ");"
-    //     );
-    //   });
+
+await browser.executeScript(`arguments[0].scrollIntoView();`, search.clickcontinue.getWebElement());
+
     await search.clickcontinue.click();
     await present(search.inputpwd)
     await search.inputpwd.sendKeys(pwd);
@@ -89,11 +84,9 @@ Then(/^I log into my account$/,{timeout: 2 * 5000}, async () => {
 When(/^I enter "(.*?)" in searchbar$/,{timeout: 2 * 5000}, async (item:string) => {
         await present(search.searchbox)
         await search.searchbox.sendKeys(item);
-        // search.submitSearch.getLocation().then(function (location) {
-        //     return browser.executeScript(
-        //       "window.scrollTo(" + location.x + ", " + location.y + ");"
-        //     );
-        //   });
+        await browser.executeScript(`arguments[0].scrollIntoView();`, search.submitSearch.getWebElement());
+
+    
          await search.submitSearch.click();
         await browser.sleep(3000);
 })
@@ -116,11 +109,9 @@ When(/^Go to fourth page$/, {timeout: 2 * 5000},async () => {
 Then(/^Click first item in cart$/,{timeout: 2 * 5000}, async () => {
 
     await present(search.firstiteminpg)
-    // search.firstiteminpg.getLocation().then(function (location) {
-    //     return browser.executeScript(
-    //       "window.scrollTo(" + location.x + ", " + location.y + ");"
-    //     );
-    //   });
+   
+    await browser.executeScript(`arguments[0].scrollIntoView();`, search.firstiteminpg.getWebElement());
+
       await search.firstiteminpg.click();
   
       var winHandles = browser.getAllWindowHandles();
@@ -139,12 +130,9 @@ Then(/^Click first item in cart$/,{timeout: 2 * 5000}, async () => {
 Then(/^Add to cart and check$/,{timeout: 3 * 5000}, async () => {
 
     await present(search.addtocart)
-        // search.addtocart.getLocation().then(function (location) {
-        //   return browser.executeScript(
-        //     "window.scrollTo(" + location.x + ", " + location.y + ");"
-        //   );
-        // });
-    
+       
+        await browser.executeScript(`arguments[0].scrollIntoView();`, search.addtocart.getWebElement());
+
         await search.addtocart.click();
     
         await browser.driver.switchTo().activeElement();
@@ -153,11 +141,9 @@ Then(/^Add to cart and check$/,{timeout: 3 * 5000}, async () => {
   await present(search.sidesheetclosebtn)
     
     try{
-        await search.sidesheetclosebtn.getLocation().then(function (location) {
-            return browser.executeScript(
-              "window.scrollTo(" + location.x + ", " + location.y + ");"
-            );
-          });
+      
+        await browser.executeScript(`arguments[0].scrollIntoView();`, search.sidesheetclosebtn.getWebElement());
+
         await search.sidesheetclosebtn.click();
         await browser.sleep(3000);
         console.log("X clicked");
@@ -172,11 +158,9 @@ Then(/^Add to cart and check$/,{timeout: 3 * 5000}, async () => {
         let itemno = await search.cartCount.getText();
      console.log("Items IN CARt", typeof parseInt(itemno,10),parseInt(itemno,10));
         expect(parseInt(itemno,10)).to.be.greaterThan(0);
-        await search.cartPage.getLocation().then(function (location) {
-            return browser.executeScript(
-              "window.scrollTo(" + location.x + ", " + location.y + ");"
-            );
-          });
+        await browser.executeScript(`arguments[0].scrollIntoView();`, search.cartPage.getWebElement());
+
+      
        await search.cartPage.click();
         console.log("checking items in cart");
     
