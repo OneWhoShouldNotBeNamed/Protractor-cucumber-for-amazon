@@ -10,11 +10,6 @@ var should = require('chai').should()
 const search: SearchPageObject = new SearchPageObject();
 let pdtitle:string;
 
-When("I click on pincode",{timeout: 2 * 5000}, async () => {
-    await search.pincode.click();
-       await browser.sleep(2000)
-       
-});
 async function present(toCheck:ElementFinder,checkvisiblity:boolean=true){
     if(checkvisiblity){
         var EC = protractor.ExpectedConditions;
@@ -22,24 +17,46 @@ async function present(toCheck:ElementFinder,checkvisiblity:boolean=true){
     }
     await toCheck.isPresent();
     const elementDisplyed =  await toCheck.isDisplayed();
-      console.log("DISPLAYED", await toCheck.isDisplayed());
-      expect(elementDisplyed).to.be.true;
+    console.log("DISPLAYED", await toCheck.isDisplayed());
+    expect(elementDisplyed).to.be.true;
    }
+  async function deleteItem() {
+        await present(search.cartCount)
+        console.log("For delete-item count in container ");
+        let itemno = parseInt((await search.cartCount.getText()),10)
+        console.log("Items IN CARt",itemno, typeof itemno);
+        await browser.executeScript(`arguments[0].scrollIntoView();`, search.cartPage.getWebElement());
+        if(itemno > 0){
+        await search.cartPage.click();
+        console.log("checking items in cart");
+          for(let i = 0;i < itemno; i++){
+            console.log("INSIDE loop",i+1);
+            await present(search.activeItem.element(by.css(`div[data-item-index='${i+1}']`)).search.delbtn)
+            await browser.sleep(3000)
+            await search.activeItem.element(by.css(`div[data-item-index='${i+1}']`)).search.delbtn.click()
+            console.log("Deleted",i+1);
+            await browser.sleep(3000)
+           
+          }
+  }
+}
+async function scroll(eleItem:ElementFinder){
+  await browser.executeScript(`arguments[0].scrollIntoView();`, eleItem.getWebElement());
 
+}
+When("I click on pincode",{timeout: 2 * 5000}, async () => {
+  await search.pincode.click();
+     await browser.sleep(2000)
+   });
 Then(/^I entered pin "(.*?)"$/,{timeout: 3 * 5000}, async(pin:string) => {
    
     await present(search.searchPin)
     await search.searchPin.sendKeys(pin);
     await browser.sleep(2000);
 
-        await browser.sleep(3000);
-    // browser.executeScript("window.scrollTo(" + location.x + ", " + location.y + ");").then(async()=>{
-    //   //whatever you need to check for here
-    //   await search.zipapply.click();
-
-    //   });
-    await browser.executeScript(`arguments[0].scrollIntoView();`, search.zipapply.getWebElement());
-
+    await browser.sleep(3000);
+        // await browser.executeScript(`arguments[0].scrollIntoView();`, search.zipapply.getWebElement());
+    await scroll(search.zipapply)
     await search.zipapply.click();
     await present(search.updatedpin)
     console.log("pin updated");
@@ -77,16 +94,33 @@ await browser.executeScript(`arguments[0].scrollIntoView();`, search.clickcontin
     await search.inputpwd.sendKeys(pwd);
 });
 
-Then(/^I log into my account$/,{timeout: 2 * 5000}, async () => {
+Then(/^I log into my account$/,{timeout: 3 * 150000}, async() => {
     await search.signinbtn.click();
-    await browser.sleep(2000);
+    await browser.sleep(3000);
+   await deleteItem();
+   await browser.sleep(2000);
+
+  //   await present(search.cartCount)
+  //   console.log("For delete-item count in container ");
+  //  let itemno = await search.cartCount.getText();
+  //  console.log("Items IN CARt", typeof parseInt(itemno,10),parseInt(itemno,10));
+  //  await browser.executeScript(`arguments[0].scrollIntoView();`, search.cartPage.getWebElement());
+ 
+  //   await search.cartPage.click();
+  //   console.log("checking items in cart");
+
+  //  for(let i=0;i< parseInt(itemno,10);i++){
+  //   await present(element(by.css(`div[data-item-index=${i+1}]`)).element(by.css("input[data-action='delete']")))
+  //   await browser.sleep(3000)
+  //   await element(by.css(`div[data-item-index=${i+1}]`)).element(by.css("input[data-action='delete']")).click()
+  //   await browser.sleep(3000)
+  //  }
+
 });
 When(/^I enter "(.*?)" in searchbar$/,{timeout: 2 * 5000}, async (item:string) => {
         await present(search.searchbox)
         await search.searchbox.sendKeys(item);
         await browser.executeScript(`arguments[0].scrollIntoView();`, search.submitSearch.getWebElement());
-
-    
          await search.submitSearch.click();
         await browser.sleep(3000);
 })
@@ -159,7 +193,6 @@ Then(/^Add to cart and check$/,{timeout: 3 * 5000}, async () => {
      console.log("Items IN CARt", typeof parseInt(itemno,10),parseInt(itemno,10));
         expect(parseInt(itemno,10)).to.be.greaterThan(0);
         await browser.executeScript(`arguments[0].scrollIntoView();`, search.cartPage.getWebElement());
-
       
        await search.cartPage.click();
         console.log("checking items in cart");
