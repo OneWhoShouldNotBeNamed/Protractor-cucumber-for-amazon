@@ -131,7 +131,7 @@ Then(/^Click first item in cart$/,{timeout: 2 * 5000}, async () => {
         // //  browser.switchTo().window(parentWindow);
       });
     await present(search.addtocart)
-       let pdtitle = await element(by.id("productTitle")).getText();
+       pdtitle = await element(by.id("productTitle")).getText();
       console.log("PRDT title", pdtitle);
   
      await browser.sleep(3000)
@@ -184,12 +184,12 @@ Then(/^Add to cart and check$/,{timeout: 3 * 5000}, async () => {
       //  await present(search.itemNameincart)
        console.log("first item in cart visible");
 
-          // let itemname=await search.itemNamecart.getAttribute('textContent')
-          // let itemname=await search.itemNamecart.getText()
+          let itemname=await search.itemNameincart.getAttribute('textContent')
+          // let itemname=await search.itemNameincart.getText()
           // let itemname=await search.itemNameincart.getAttribute('innerText')
 
-        // console.log("PRdct text", itemname);
-        // console.log("PRDT title",  pdtitle);
+        console.log("PRdct text", itemname);
+        console.log("PRDT title",  pdtitle);
       //   expect(pdtitle).to.have.string(itemname)
        await  browser.sleep(2000);
 
