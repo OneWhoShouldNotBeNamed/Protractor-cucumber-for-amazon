@@ -24,7 +24,7 @@ public productTitle:ElementFinder;
 public sidesheetclosebtn:ElementFinder;
 public cartCount:ElementFinder;
 public cartPage:ElementFinder;
-public itemNamecart:ElementFinder;
+public itemNameincart:ElementFinder;
 
 
     constructor() {
@@ -49,6 +49,6 @@ public itemNamecart:ElementFinder;
 
         this.cartCount=element(by.id("nav-cart-count-container")).element(by.id("nav-cart-count"))
         this.cartPage=element(by.id("nav-cart"))
-        this.itemNamecart=element(by.css("div[data-item-index='1']")).element(by.css("li:nth-child(1)")).element(by.css("span[class='a-truncate-full a-offscreen']"))
+        this.itemNameincart=element(by.css("div[data-item-index='1']")).element(by.css("li:nth-child(1)")).element(by.css("span[class='a-truncate-full a-offscreen']"))
     }
 }

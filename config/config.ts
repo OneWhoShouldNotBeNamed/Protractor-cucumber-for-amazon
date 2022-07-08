@@ -12,7 +12,7 @@ export const config: Config = {
     baseUrl: "https://www.amazon.in",
 
     capabilities: {
-        browserName: "chrome",
+        browserName: "firefox",
     },
 
     framework: "custom",
