@@ -190,7 +190,7 @@ Then(/^Add to cart and check$/,{timeout: 3 * 5000}, async () => {
 
         console.log("PRdct text", itemname);
         console.log("PRDT title",  pdtitle);
-      //   expect(pdtitle).to.have.string(itemname)
+        expect(pdtitle).to.have.string(itemname)
        await  browser.sleep(2000);
 
 
