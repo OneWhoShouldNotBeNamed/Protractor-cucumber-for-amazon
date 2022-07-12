@@ -53,7 +53,6 @@ public activeItem: ElementFinder;
         this.cartCount=element(by.id("nav-cart-count-container")).element(by.id("nav-cart-count"))
         this.cartPage=element(by.id("nav-cart"))
         this.itemNameincart=element(by.css("div[data-item-index='1']")).element(by.css("li:nth-child(1)")).element(by.css("span[class='a-truncate a-size-medium']")).element(by.css("span[class='a-truncate-full a-offscreen']"))
-
         this.activeItem=element(by.css("div[data-name='Active Items']"))
         this.delbtn=element(by.css("input[data-action='delete']"))
     }

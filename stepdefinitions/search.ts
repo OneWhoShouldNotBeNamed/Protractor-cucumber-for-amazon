@@ -31,9 +31,9 @@ async function present(toCheck:ElementFinder,checkvisiblity:boolean=true){
         console.log("checking items in cart");
           for(let i = 0;i < itemno; i++){
             console.log("INSIDE loop",i+1);
-            await present(search.activeItem.element(by.css(`div[data-item-index='${i+1}']`)).search.delbtn)
+            await present(search.activeItem.element(by.css(`div[data-item-index='${i+1}']`)).element(by.css("input[data-action='delete']")))
             await browser.sleep(3000)
-            await search.activeItem.element(by.css(`div[data-item-index='${i+1}']`)).search.delbtn.click()
+            await search.activeItem.element(by.css(`div[data-item-index='${i+1}']`)).element(by.css("input[data-action='delete']")).click()
             console.log("Deleted",i+1);
             await browser.sleep(3000)
            
@@ -55,7 +55,6 @@ Then(/^I entered pin "(.*?)"$/,{timeout: 3 * 5000}, async(pin:string) => {
     await browser.sleep(2000);
 
     await browser.sleep(3000);
-        // await browser.executeScript(`arguments[0].scrollIntoView();`, search.zipapply.getWebElement());
     await scroll(search.zipapply)
     await search.zipapply.click();
     await present(search.updatedpin)
@@ -85,7 +84,6 @@ When('I click on signIn to enter email {string} and password {string}',{timeout:
         await search.hellosignin.click();
     await present(search.inputemail)
     await search.inputemail.sendKeys(email);
-    // //   browser.sleep(3000)
 
 await browser.executeScript(`arguments[0].scrollIntoView();`, search.clickcontinue.getWebElement());
 
@@ -99,22 +97,6 @@ Then(/^I log into my account$/,{timeout: 3 * 150000}, async() => {
     await browser.sleep(3000);
    await deleteItem();
    await browser.sleep(2000);
-
-  //   await present(search.cartCount)
-  //   console.log("For delete-item count in container ");
-  //  let itemno = await search.cartCount.getText();
-  //  console.log("Items IN CARt", typeof parseInt(itemno,10),parseInt(itemno,10));
-  //  await browser.executeScript(`arguments[0].scrollIntoView();`, search.cartPage.getWebElement());
- 
-  //   await search.cartPage.click();
-  //   console.log("checking items in cart");
-
-  //  for(let i=0;i< parseInt(itemno,10);i++){
-  //   await present(element(by.css(`div[data-item-index=${i+1}]`)).element(by.css("input[data-action='delete']")))
-  //   await browser.sleep(3000)
-  //   await element(by.css(`div[data-item-index=${i+1}]`)).element(by.css("input[data-action='delete']")).click()
-  //   await browser.sleep(3000)
-  //  }
 
 });
 When(/^I enter "(.*?)" in searchbar$/,{timeout: 2 * 5000}, async (item:string) => {
@@ -140,11 +122,11 @@ When(/^Go to fourth page$/, {timeout: 2 * 5000},async () => {
     await search.nextbtn.click();
   }
 });
-Then(/^Click first item in cart$/,{timeout: 2 * 5000}, async () => {
+Then(/^Click first item in cart$/,{timeout: 2 * 105000}, async () => {
 
     await present(search.firstiteminpg)
    
-    await browser.executeScript(`arguments[0].scrollIntoView();`, search.firstiteminpg.getWebElement());
+    // await browser.executeScript(`arguments[0].scrollIntoView();`, search.firstiteminpg.getWebElement());
 
       await search.firstiteminpg.click();
   
@@ -161,7 +143,7 @@ Then(/^Click first item in cart$/,{timeout: 2 * 5000}, async () => {
   
      await browser.sleep(3000)
 })
-Then(/^Add to cart and check$/,{timeout: 3 * 5000}, async () => {
+Then(/^Add to cart and check$/,{timeout: 3 * 15000}, async () => {
 
     await present(search.addtocart)
        
@@ -183,9 +165,7 @@ Then(/^Add to cart and check$/,{timeout: 3 * 5000}, async () => {
         console.log("X clicked");
 
         }catch(err){ console.log("X not clicked");}
-    // console.log("X clicked");
     
-        // await browser.wait(EC.visibilityOf(element(by.id("nav-cart-count-container")).element(by.id("nav-cart-count"))),10000);
         await present(search.cartCount)
          console.log("item count in container ");
     
